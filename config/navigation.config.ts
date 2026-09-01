@@ -21,8 +21,5 @@ export const navigationConfig: NavigationItem[] = [
     label: "שאלות נפוצות",
     href: "/#faq",
   },
-  {
-    label: "צור קשר",
-    href: "/#contact",
-  },
+  
 ];
