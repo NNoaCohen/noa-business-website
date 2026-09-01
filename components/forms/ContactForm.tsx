@@ -11,6 +11,7 @@ import {
 
 export function ContactForm() {
   const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const {
     register,
@@ -27,17 +28,39 @@ export function ContactForm() {
     },
   });
 
-  const onSubmit = (data: ContactFormData) => {
-    console.log(data);
+  const onSubmit = async (data: ContactFormData) => {
+    setIsSuccess(false);
+    setErrorMessage("");
 
-    setIsSuccess(true);
-    reset();
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send contact form");
+      }
+
+      setIsSuccess(true);
+      reset();
+    } catch {
+      setErrorMessage(
+        "אירעה שגיאה בשליחת הפרטים. נסו שוב מאוחר יותר."
+      );
+    }
   };
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      onChange={() => setIsSuccess(false)}
+      onChange={() => {
+        setIsSuccess(false);
+        setErrorMessage("");
+      }}
       className="space-y-4"
       noValidate
     >
@@ -224,6 +247,16 @@ export function ContactForm() {
           className="rounded-md bg-primary/10 px-4 py-2.5 text-center text-sm font-medium text-primary"
         >
           הפרטים נשלחו בהצלחה! נחזור אליכם בהקדם.
+        </div>
+      )}
+
+      {/* Error */}
+      {errorMessage && (
+        <div
+          role="alert"
+          className="rounded-md bg-destructive/10 px-4 py-2.5 text-center text-sm font-medium text-destructive"
+        >
+          {errorMessage}
         </div>
       )}
     </form>
