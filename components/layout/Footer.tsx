@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Container } from "@/components/layout/Container";
 import { navigationConfig } from "@/config/navigation.config";
 import { siteConfig } from "@/config/site.config";
+import { contactLinks } from "@/lib/contactLinks";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -11,13 +12,8 @@ export function Footer() {
     <footer className="bg-zinc-950 text-white">
       <Container>
         <div className="grid gap-10 py-12 md:grid-cols-3 md:gap-16">
-
-          {/* Business */}
           <div>
-            <Link
-              href="/"
-              className="text-xl font-bold"
-            >
+            <Link href="/" className="text-xl font-bold">
               {siteConfig.business.name}
             </Link>
 
@@ -26,16 +22,12 @@ export function Footer() {
             </p>
           </div>
 
-          {/* Navigation */}
           <div>
             <h3 className="text-base font-semibold">
               ניווט מהיר
             </h3>
 
-            <nav
-              className="mt-4"
-              aria-label="ניווט תחתון"
-            >
+            <nav className="mt-4" aria-label="ניווט תחתון">
               <ul className="space-y-3">
                 {navigationConfig.map((item) => (
                   <li key={item.href}>
@@ -51,7 +43,6 @@ export function Footer() {
             </nav>
           </div>
 
-          {/* Contact */}
           <div>
             <h3 className="text-base font-semibold">
               צרו קשר
@@ -60,7 +51,7 @@ export function Footer() {
             <div className="mt-4 flex flex-col gap-3 text-sm text-zinc-400">
               {siteConfig.contact.phone && (
                 <a
-                  href={`tel:${siteConfig.contact.phone}`}
+                  href={contactLinks.phone}
                   className="transition-colors hover:text-white"
                 >
                   טלפון {siteConfig.contact.phone}
@@ -69,7 +60,9 @@ export function Footer() {
 
               {siteConfig.contact.email && (
                 <a
-                  href={`mailto:${siteConfig.contact.email}`}
+                  href={contactLinks.email}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="transition-colors hover:text-white"
                 >
                   מייל {siteConfig.contact.email}
@@ -78,7 +71,7 @@ export function Footer() {
 
               {siteConfig.contact.whatsapp && (
                 <a
-                  href={siteConfig.contact.whatsapp}
+                  href={contactLinks.whatsapp}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="transition-colors hover:text-white"
@@ -88,7 +81,6 @@ export function Footer() {
               )}
             </div>
           </div>
-
         </div>
 
         <div className="border-t border-white/10 py-5 text-center text-xs text-zinc-500">

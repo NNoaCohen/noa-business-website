@@ -13,15 +13,22 @@ export interface SiteConfig {
     address?: string;
   };
 
+  contactMessages: {
+    whatsapp: string;
+    emailSubject: string;
+    emailBody: string;
+  };
+
   social: {
     instagram?: string;
     facebook?: string;
     linkedin?: string;
     youtube?: string;
   };
-    cta: {
-  label: string;
-  href: string;
-  enabled: boolean;
-};
+
+  cta: {
+    label: string;
+    href: string;
+    enabled: boolean;
+  };
 }
