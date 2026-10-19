@@ -1,77 +1,82 @@
-import { Mail, MessageCircle, Phone } from "lucide-react";
+import { BrandCursor } from "@/components/ui/BrandCursor";
+import { contactContent as content } from "@/data/contact";
 
-import { ContactForm } from "@/components/forms/ContactForm";
-import { Container } from "@/components/layout/Container";
-import { contactContent } from "@/data/contact";
-import { siteConfig } from "@/config/site.config";
-import { contactLinks } from "@/lib/contactLinks";
+function EmailIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3.5 6.5h17v11h-17z" />
+      <path d="m4 7 8 6 8-6" />
+    </svg>
+  );
+}
+
+function PhoneIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M7.2 3.8h3l1.3 4.1-2 1.8a15.5 15.5 0 0 0 4.8 4.8l1.8-2 4.1 1.3v3c0 1.1-.9 2-2 2A15.2 15.2 0 0 1 5.2 5.8c0-1.1.9-2 2-2Z" />
+    </svg>
+  );
+}
 
 export function ContactSection() {
   return (
-    <section id="contact" className="py-8 md:py-10">
-      <Container>
-        <div className="rounded-2xl bg-muted/40 px-6 py-8 md:px-10 md:py-10">
-          <div className="grid items-center gap-8 md:grid-cols-[1fr_1.15fr] md:gap-6">
-            <div>
-              {contactContent.eyebrow && (
-                <span className="mb-2 block text-sm font-medium">
-                  {contactContent.eyebrow}
+    <section className="content-section contact-section" id="contact" aria-labelledby="contact-title">
+      <div className="wrap">
+        <div className="contact-panel">
+          <div className="contact-panel__copy">
+            <div className="eyebrow contact-panel__eyebrow">
+              <BrandCursor />
+              <span className="eyebrow__text">{content.eyebrow}</span>
+            </div>
+
+            <h2 className="contact-panel__title" id="contact-title">
+              <span>{content.titleLines[0]}</span>
+              <span>
+                <span className="contact-panel__emphasis">{content.titleLines[1]}</span>
+              </span>
+            </h2>
+
+            <div className="contact-panel__description">
+              {content.description.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+            <p className="contact-panel__secondary">{content.secondaryLine}</p>
+          </div>
+
+          <div className="contact-panel__methods">
+            <div className="contact-panel__decoration" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </div>
+
+            <a className="contact-card contact-card--email" href={content.email.href}>
+              <span className="contact-card__icon">
+                <EmailIcon />
+              </span>
+              <span className="contact-card__text">
+                <span className="contact-card__title">{content.email.title}</span>
+                <span className="contact-card__value" dir="ltr">
+                  {content.email.value}
                 </span>
-              )}
+              </span>
+            </a>
 
-              <h2 className="text-3xl leading-tight md:text-4xl">
-                {contactContent.title}
-              </h2>
-
-              {contactContent.description && (
-                <p className="mt-3 text-sm text-muted-foreground md:text-base">
-                  {contactContent.description}
-                </p>
-              )}
-
-              <div className="mt-5 space-y-2 text-sm">
-                {siteConfig.contact.phone && (
-                  <a
-                    href={contactLinks.phone}
-                    className="flex items-center gap-3"
-                  >
-                    <Phone size={17} className="text-primary" />
-                    <span>{siteConfig.contact.phone}</span>
-                  </a>
-                )}
-
-                {siteConfig.contact.email && (
-                  <a
-                    href={contactLinks.email}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3"
-                  >
-                    <Mail size={17} className="text-primary" />
-                    <span>{siteConfig.contact.email}</span>
-                  </a>
-                )}
-
-                {siteConfig.contact.whatsapp && (
-                  <a
-                    href={contactLinks.whatsapp}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3"
-                  >
-                    <MessageCircle size={17} className="text-primary" />
-                    <span>WhatsApp</span>
-                  </a>
-                )}
-              </div>
-            </div>
-
-            <div className="rounded-2xl bg-background p-5">
-              <ContactForm />
-            </div>
+            <a className="contact-card contact-card--phone" href={content.phone.href}>
+              <span className="contact-card__icon">
+                <PhoneIcon />
+              </span>
+              <span className="contact-card__text">
+                <span className="contact-card__title">{content.phone.title}</span>
+                <span className="contact-card__value" dir="ltr">
+                  {content.phone.value}
+                </span>
+              </span>
+            </a>
           </div>
         </div>
-      </Container>
+      </div>
     </section>
   );
 }

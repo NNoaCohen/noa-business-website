@@ -8,6 +8,7 @@ import {
   contactSchema,
   type ContactFormData,
 } from "@/lib/contactSchema";
+import { siteConfig } from "@/config/site.config";
 
 export function ContactForm() {
   const [isSuccess, setIsSuccess] = useState(false);
@@ -33,23 +34,16 @@ export function ContactForm() {
     setErrorMessage("");
 
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to send contact form");
-      }
-
+      const subject = encodeURIComponent(`פנייה חדשה מהאתר - ${data.name}`);
+      const body = encodeURIComponent(
+        `שם: ${data.name}\nטלפון: ${data.phone}\nאימייל: ${data.email}\n\nהודעה:\n${data.message}`
+      );
+      window.location.href = `mailto:${siteConfig.contact.email}?subject=${subject}&body=${body}`;
       setIsSuccess(true);
       reset();
     } catch {
       setErrorMessage(
-        "אירעה שגיאה בשליחת הפרטים. נסו שוב מאוחר יותר."
+        "לא הצלחנו לפתוח את אפליקציית המייל. אפשר לכתוב ישירות למייל שמופיע באתר."
       );
     }
   };
@@ -246,7 +240,7 @@ export function ContactForm() {
           role="status"
           className="rounded-md bg-primary/10 px-4 py-2.5 text-center text-sm font-medium text-primary"
         >
-          הפרטים נשלחו בהצלחה! נחזור אליכם בהקדם.
+          נפתחה הודעת מייל חדשה. שלחו אותה כדי להשלים את הפנייה.
         </div>
       )}
 

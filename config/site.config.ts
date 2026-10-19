@@ -2,35 +2,16 @@ import type { SiteConfig } from "@/types/site";
 
 export const siteConfig: SiteConfig = {
   business: {
-    name: "שם העסק",
-    type: "סוג העסק",
-    description: "תיאור קצר של העסק",
-    logo: "",
+    name: "נועה הלוי",
+    type: "אתרים עם אופי",
+    description: "אתרים אישיים ומדויקים לעסקים שרוצים להציג את עצמם בצורה שהלקוחות זוכרים.",
+    logo: "/logo-noa.png",
   },
-
-  contact: {
-    phone: "",
-    email: "",
-    whatsapp: "",
-    address: "",
-  },
-
+  contact: { phone: "054-854-0737", email: "noa8540737@gmail.com", address: "" },
   contactMessages: {
-    whatsapp: "היי, אשמח לקבל פרטים נוספים.",
-    emailSubject: "בקשה לקבלת פרטים",
-    emailBody: "היי, אשמח לקבל פרטים נוספים.",
+    emailSubject: "בואי נדבר על האתר שלי",
+    emailBody: "היי נועה, הגעתי דרך האתר שלך ואשמח לספר לך קצת על העסק שלי.",
   },
-
-  social: {
-    instagram: "",
-    facebook: "",
-    linkedin: "",
-    youtube: "",
-  },
-
-  cta: {
-    label: "צור קשר",
-    href: "/#contact",
-    enabled: true,
-  },
+  social: { instagram: "", facebook: "", linkedin: "", youtube: "" },
+  cta: { label: "בואי נדבר", href: "/#contact", enabled: true },
 };

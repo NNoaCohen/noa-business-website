@@ -1,5 +1,14 @@
-export interface ContactContent {
-  eyebrow?: string;
+export interface ContactMethod {
   title: string;
-  description?: string;
+  value: string;
+  href: string;
+}
+
+export interface ContactContent {
+  eyebrow: string;
+  titleLines: [string, string];
+  description: [string, string];
+  secondaryLine: string;
+  email: ContactMethod;
+  phone: ContactMethod;
 }

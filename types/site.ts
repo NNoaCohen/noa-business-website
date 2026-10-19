@@ -9,12 +9,10 @@ export interface SiteConfig {
   contact: {
     phone: string;
     email: string;
-    whatsapp: string;
     address?: string;
   };
 
   contactMessages: {
-    whatsapp: string;
     emailSubject: string;
     emailBody: string;
   };

@@ -1,73 +1,103 @@
-import Image from "next/image";
-import Link from "next/link";
+"use client";
 
-import { Container } from "@/components/layout/Container";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import { heroContent } from "@/data/hero";
 
 export function HeroSection() {
-    return (
-        <section className="pb-14 pt-4 md:pb-20 md:pt-6">
-            <Container>
-                <div className="rounded-2xl bg-muted/40 px-5 py-8 md:px-16 md:py-14">
-                    <div className="grid items-center gap-10 md:grid-cols-2 md:gap-16">
+  const [isAnimated, setIsAnimated] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
+  const [isSettled, setIsSettled] = useState(false);
 
-                        {/* Content */}
-                        <div className="max-w-lg">
-                            {heroContent.eyebrow && (
-                                <span className="mb-3 block text-sm font-medium text-primary">
-                                    {heroContent.eyebrow}
-                                </span>
-                            )}
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-                            <h1 className="text-3xl leading-tight md:text-5xl">
-                                {heroContent.title}
-                            </h1>
+    if (mediaQuery.matches) {
+      setIsAnimated(false);
+      setIsClicked(true);
+      setIsSettled(true);
+      return;
+    }
 
-                            <p className="mt-4 text-sm leading-6 text-muted-foreground md:text-base">
-                                {heroContent.description}
-                            </p>
+    setIsAnimated(true);
 
-                            <div className="mt-6 flex flex-wrap gap-3">
-                                {heroContent.primaryCta && (
-                                    <Link
-                                        href={heroContent.primaryCta.href}
-                                        className="rounded-md bg-primary px-6 py-3 font-medium text-primary-foreground transition-opacity hover:opacity-90"
-                                    >
-                                        {heroContent.primaryCta.label}
-                                    </Link>
-                                )}
+    const timers = [
+      window.setTimeout(() => setIsClicked(true), 2550),
+      window.setTimeout(() => {
+        setIsSettled(true);
+      }, 4150),
+    ];
 
-                                {heroContent.secondaryCta && (
-                                    <Link
-                                        href={heroContent.secondaryCta.href}
-                                        className="rounded-md border bg-background px-6 py-3 font-medium transition-colors hover:bg-muted"
-                                    >
-                                        {heroContent.secondaryCta.label}
-                                    </Link>
-                                )}
-                            </div>
-                        </div>
+    return () => {
+      timers.forEach((timer) => window.clearTimeout(timer));
+    };
+  }, []);
 
-                        {/* Image */}
-                        <div className="flex min-h-[220px] items-center justify-center overflow-hidden rounded-2xl bg-muted md:min-h-[360px]">                            {heroContent.image ? (
-                            <Image
-                                src={heroContent.image.src}
-                                alt={heroContent.image.alt}
-                                width={500}
-                                height={400}
-                                className="h-full w-full object-cover"
-                                priority
-                            />
-                        ) : (
-                            <span className="text-sm text-muted-foreground">
-                                תמונת העסק
-                            </span>
-                        )}
-                        </div>
+  return (
+    <section className="hero">
+      <div className="wrap">
+        <div
+          className={`brand-hero ${isAnimated ? "is-animated" : ""} ${isClicked ? "is-clicked" : ""} ${isSettled ? "is-settled" : ""}`}
+          aria-label="הצעת עיצוב לאזור ההירו"
+        >
+          <div className="brand-hero__frame" aria-hidden="true" />
 
-                    </div>
-                </div>
-            </Container>
-        </section>
-    );
+          <div className="brand-hero__toolbar">
+            <div className="brand-hero__dots" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </div>
+            <span className="brand-hero__url">NOA HALEVI · WEB DESIGN</span>
+          </div>
+
+          <div className="brand-hero__content">
+            <div className="brand-hero__kicker">{heroContent.eyebrow}</div>
+            <h1 className="brand-hero__title">{heroContent.title}</h1>
+
+            <div className="brand-hero__tagline" aria-label="אתרים עם אופי">
+              <span className="brand-hero__tagline-words">
+                <span>אתרים עם</span>
+                <span className="brand-hero__word">
+                  אופי
+                  <span className="brand-hero__cursor" aria-hidden="true">
+                    <span className="brand-hero__ray" />
+                    <span className="brand-hero__ray brand-hero__ray--two" />
+                    <span className="brand-hero__ray brand-hero__ray--three" />
+                    <span className="brand-hero__pointer">
+                      <Image
+                        src="/images/brand-cursor.png"
+                        alt=""
+                        width={44}
+                        height={58}
+                        className="brand-hero__cursor-image"
+                      />
+                    </span>
+                  </span>
+                </span>
+              </span>
+            </div>
+
+            <p className="brand-hero__description">
+              {heroContent.description.split("\n").map((line, index) => (
+                <span key={line + index}>
+                  {index > 0 && <br />}
+                  {line}
+                </span>
+              ))}
+            </p>
+
+            <div className="brand-hero__actions">
+              <a className="brand-hero__action brand-hero__action--primary" href={heroContent.primaryCta?.href}>
+                {heroContent.primaryCta?.label}
+              </a>
+              <a className="brand-hero__action brand-hero__action--secondary" href={heroContent.secondaryCta?.href}>
+                {heroContent.secondaryCta?.label}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }

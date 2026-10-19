@@ -1,0 +1,1 @@
+export function HighlightsSection(){return <div className="principles"><div className="principle-row wrap"><span className="principle-intro">תהליך אחד, מהרעיון ועד ההשקה</span>{["אפיון מדויק","עיצוב אישי","פיתוח רספונסיבי","אתר באוויר"].map((label,i)=><span className="principle" key={label}><b>0{i+1}</b>{label}</span>)}</div></div>}

@@ -1,57 +1,60 @@
 import Image from "next/image";
-
-import { Container } from "@/components/layout/Container";
-import { Section } from "@/components/layout/Section";
+import { BrandCursor } from "@/components/ui/BrandCursor";
 import { aboutContent } from "@/data/about";
 
 export function AboutSection() {
-    return (
-        <Section id="about">
-            <Container>
-                <div className="grid items-center gap-8 md:grid-cols-2 md:gap-16">
+  return (
+    <section
+      className="content-section about about-section"
+      id="about"
+      aria-labelledby="about-title"
+    >
+      <div className="wrap about-section__grid">
+        <div className="about-section__copy">
+          <div className="eyebrow about-section__eyebrow">
+            <BrandCursor />
+            <span className="eyebrow__text">{aboutContent.eyebrow}</span>
+          </div>
 
-                    {/* Content */}
-                    <div className="order-1 max-w-lg md:order-2">
-                        {aboutContent.eyebrow && (
-                            <span className="mb-2 block text-sm font-medium">
-                                {aboutContent.eyebrow}
-                            </span>
-                        )}
+          <h2 className="about-section__title" id="about-title">
+            {aboutContent.titleLines.map((line, index) => (
+              <span key={index}>
+                {line.text}
+                {line.emphasis && (
+                  <span className="about-section__emphasis">{line.emphasis}</span>
+                )}
+                {line.suffix}
+              </span>
+            ))}
+          </h2>
 
-                        <h2 className="text-3xl leading-tight md:text-4xl">
-                            {aboutContent.title}
-                        </h2>
+          <div className="about-section__paragraphs">
+            {aboutContent.paragraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
 
-                        <p className="mt-4 text-sm leading-6 text-muted-foreground md:text-base">
-                            {aboutContent.description}
-                        </p>
+          <ul className="about-section__values">
+            {aboutContent.values.map((value) => (
+              <li key={value}>{value}</li>
+            ))}
+          </ul>
 
-                        {aboutContent.secondaryDescription && (
-                            <p className="mt-3 text-sm leading-6 text-muted-foreground md:text-base">
-                                {aboutContent.secondaryDescription}
-                            </p>
-                        )}
-                    </div>
+          <a className="button about-section__cta" href={aboutContent.action.href}>
+            {aboutContent.action.label}
+          </a>
+        </div>
 
-                    {/* Image */}
-                    <div className="order-2 flex min-h-[220px] items-center justify-center overflow-hidden rounded-2xl bg-muted md:order-1 md:min-h-[360px]">
-                        {aboutContent.image ? (
-                            <Image
-                                src={aboutContent.image.src}
-                                alt={aboutContent.image.alt}
-                                width={500}
-                                height={400}
-                                className="h-full w-full object-cover"
-                            />
-                        ) : (
-                            <span className="text-sm text-muted-foreground">
-                                תמונת אודות
-                            </span>
-                        )}
-                    </div>
-
-                </div>
-            </Container>
-        </Section>
-    );
+        <div className="about-section__visual">
+          <Image
+            src={aboutContent.illustration.src}
+            alt={aboutContent.illustration.alt}
+            width={aboutContent.illustration.width}
+            height={aboutContent.illustration.height}
+            sizes="(max-width: 820px) 100vw, 50vw"
+          />
+        </div>
+      </div>
+    </section>
+  );
 }

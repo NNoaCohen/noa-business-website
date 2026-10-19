@@ -1,25 +1,2 @@
-import type { NavigationItem } from "@/types/navigation";
-
-export const navigationConfig: NavigationItem[] = [
-  {
-    label: "ראשי",
-    href: "/",
-  },
-  {
-    label: "אודות",
-    href: "/#about",
-  },
-  {
-    label: "שירותים",
-    href: "/#services",
-  },
-  {
-    label: "המלצות",
-    href: "/#testimonials",
-  },
-  {
-    label: "שאלות נפוצות",
-    href: "/#faq",
-  },
-  
-];
+import type {NavigationItem} from "@/types/navigation";
+export const navigationConfig:NavigationItem[]=[{label:"מה אני מציעה",href:"#services"},{label:"עבודות",href:"#work"},{label:"איך זה עובד",href:"#process"},{label:"קצת עליי",href:"#about"}];

@@ -1,10 +1,30 @@
 import type { AboutContent } from "@/types/about";
 
 export const aboutContent: AboutContent = {
-  eyebrow: "אודות",
-  title: "כמה מילים על העסק",
-  description:
-    "כאן ניתן לספר בקצרה על העסק, הניסיון המקצועי והגישה שמובילה אותו.",
-  secondaryDescription:
-    "המטרה היא לאפשר ללקוחות להכיר את העסק, להבין מי עומד מאחוריו וליצור תחושת אמון וחיבור.",
+  eyebrow: "נעים להכיר",
+  titleLines: [
+    { text: "אני נועה." },
+    { text: "אצלי, האתר שלכם" },
+    { text: "מקבל ", emphasis: "יחס אישי", suffix: "." },
+  ],
+  paragraphs: [
+    "אני מתכננת, מעצבת ומפתחת אתרים לעסקים, מהרעיון הראשון ועד ההשקה.",
+    "אתם עובדים ישירות מולי, עם הקשבה למה שחשוב לכם ועדכונים לאורך הדרך.",
+    "המטרה שלי: אתר שמרגיש שלכם ונוח ללקוחות שלכם.",
+  ],
+  values: [
+    "כתובת אחת לכל התהליך",
+    "עיצוב שמותאם לעסק",
+    "ליווי אישי עד ההשקה",
+  ],
+  action: {
+    label: "בואו נכיר",
+    href: "#contact",
+  },
+  illustration: {
+    src: "/images/about/about-illustration.png",
+    alt: "",
+    width: 1536,
+    height: 1024,
+  },
 };

@@ -1,39 +1,39 @@
-import { Container } from "@/components/layout/Container";
-import { Section } from "@/components/layout/Section";
-import { ServiceCard } from "@/components/ui/ServiceCard";
-import { servicesContent } from "@/data/services";
+import { BrandCursor } from "@/components/ui/BrandCursor";
+import { servicesContent as content } from "@/data/services";
 
 export function ServicesSection() {
-    return (
-        <Section id="services" className="bg-muted/40">
-            <Container>
-                <div className="mx-auto max-w-xl text-center">
-                    {servicesContent.eyebrow && (
-                        <span className="mb-2 block text-sm font-medium">
-                            {servicesContent.eyebrow}
-                        </span>
-                    )}
+  return (
+    <section className="content-section services-section" id="services">
+      <div className="wrap">
+        <div className="services-intro">
+          <div className="services-heading">
+            <div className="eyebrow">
+              <BrandCursor />
+              <span className="eyebrow__text">{content.eyebrow}</span>
+            </div>
+            <h2 className="services-title">
+              {content.title.map((line) => (
+                <span className="services-title__line" key={line}>
+                  {line}
+                </span>
+              ))}
+            </h2>
+          </div>
+          <p className="services-description">{content.description}</p>
+        </div>
 
-                    <h2 className="text-3xl leading-tight md:text-4xl">
-                        {servicesContent.title}
-                    </h2>
+        <div className="services-items">
+          {content.items.map((item) => (
+            <article className="services-item" key={item.label}>
+              <span className="services-item__label">{item.label}</span>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </article>
+          ))}
+        </div>
 
-                    {servicesContent.description && (
-                        <p className="mt-3 text-sm leading-6 text-muted-foreground md:text-base">
-                            {servicesContent.description}
-                        </p>
-                    )}
-                </div>
-
-                <div className="mt-7 grid gap-4 md:grid-cols-3 md:gap-5">
-                    {servicesContent.items.map((service) => (
-                        <ServiceCard
-                            key={service.title}
-                            service={service}
-                        />
-                    ))}
-                </div>
-            </Container>
-        </Section>
-    );
+        <p className="services-summary">{content.summary}</p>
+      </div>
+    </section>
+  );
 }

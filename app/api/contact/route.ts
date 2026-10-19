@@ -4,7 +4,7 @@ import { Resend } from "resend";
 import { contactSchema } from "@/lib/contactSchema";
 import { siteConfig } from "@/config/site.config";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 export async function POST(request: Request) {
     try {
@@ -16,6 +16,13 @@ export async function POST(request: Request) {
             return NextResponse.json(
                 { message: "הנתונים שנשלחו אינם תקינים." },
                 { status: 400 }
+            );
+        }
+
+        if (!resend) {
+            return NextResponse.json(
+                { message: "שירות המייל אינו מוגדר בשרת. הגדר את RESEND_API_KEY." },
+                { status: 500 }
             );
         }
 

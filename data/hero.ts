@@ -1,16 +1,9 @@
 import type { HeroContent } from "@/types/hero";
 
 export const heroContent: HeroContent = {
-  eyebrow: "ברוכים הבאים",
-  title: "כותרת ראשית שמציגה את העסק בצורה ברורה",
-  description:
-    "טקסט קצר שמסביר מה העסק מציע, למי הוא מתאים ומה הערך המרכזי שהוא נותן ללקוחות.",
-  primaryCta: {
-    label: "לשירותים",
-    href: "/#services",
-  },
-  secondaryCta: {
-    label: "צור קשר",
-    href: "/#contact",
-  },
+  eyebrow: "תכנון · עיצוב · פיתוח",
+  title: "נועה הלוי",
+  description: "העסק שלכם מיוחד.\nבואו נבנה לו אתר שמרגיש בדיוק כמוהו.",
+  primaryCta: { label: "בואו נדבר על האתר שלכם", href: "#contact" },
+  secondaryCta: { label: "לעבודות שלי", href: "#work" },
 };

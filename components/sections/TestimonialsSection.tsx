@@ -1,33 +1,52 @@
+import Link from "next/link";
+import { ArrowUpLeft } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
-import { TestimonialCard } from "@/components/ui/TestimonialCard";
 import { testimonialsContent } from "@/data/testimonials";
+import { contactLinks } from "@/lib/contactLinks";
 
 export function TestimonialsSection() {
-    return (
-        <Section id="testimonials" className="bg-muted/40">
-            <Container>
-                <div className="mx-auto max-w-xl text-center">
-                    <h2 className="text-3xl leading-tight md:text-4xl">
-                        {testimonialsContent.title}
-                    </h2>
+  const project = testimonialsContent.items[0];
 
-                    {testimonialsContent.description && (
-                        <p className="mt-3 text-sm leading-6 text-muted-foreground md:text-base">
-                            {testimonialsContent.description}
-                        </p>
-                    )}
-                </div>
+  return (
+    <Section id="project" className="project-section">
+      <Container>
+        <div className="mx-auto mb-9 max-w-2xl text-center">
+          <span className="section-eyebrow">עבודות נבחרות</span>
+          <h2 className="mt-4">{testimonialsContent.title}</h2>
+          <p className="mt-4 text-muted-foreground">{testimonialsContent.description}</p>
+        </div>
 
-                <div className="mx-auto mt-7 flex max-w-4xl flex-col gap-4">
-                    {testimonialsContent.items.map((testimonial, index) => (
-                        <TestimonialCard
-                            key={`${testimonial.name}-${index}`}
-                            testimonial={testimonial}
-                        />
-                    ))}
+        <article className="project-card">
+          <div className="project-copy">
+            <span className="section-eyebrow">אתר לעסק</span>
+            <h3 className="mt-4 text-3xl font-semibold">{project.name}</h3>
+            <p className="mt-4 text-muted-foreground">{project.quote}</p>
+            <Link href={contactLinks.email} className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-medium text-primary-foreground">
+              רוצה אתר משלך? <ArrowUpLeft size={17} />
+            </Link>
+          </div>
+          <div className="project-preview" aria-label={`הדמיה גרפית של אתר ${project.name}`}>
+            <div className="project-window">
+              <div className="project-window-top" />
+              <div className="project-window-content">
+                <span className="project-logo">ע</span>
+                <h3>{project.name}</h3>
+                <p>
+                  מרחב של מילים, תוכן וזהות
+                  <br />
+                  עיצוב אתר
+                </p>
+                <div className="project-window-tiles">
+                  <i />
+                  <i />
+                  <i />
                 </div>
-        </Container>
-        </Section >
-    );
+              </div>
+            </div>
+          </div>
+        </article>
+      </Container>
+    </Section>
+  );
 }
