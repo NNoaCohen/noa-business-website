@@ -4,19 +4,30 @@ import type { ContactContent } from "@/types/contact";
 export const contactContent: ContactContent = {
   eyebrow: "מתחילים בשיחה",
   titleLines: ["בואו ניתן לעסק שלכם", "מקום ברשת."],
-  description: [
-    "יש לכם רעיון לאתר? רוצים להבין מאיפה מתחילים?",
-    "נדבר על העסק שלכם ועל הדרך להתקדם.",
-  ],
-  secondaryLine: "אפשר להתחיל במייל או בשיחת טלפון.",
+  description: ["אפשר לפנות אליי ישירות,", "או להשאיר פרטים ואחזור אליכם."],
   email: {
-    title: "בואו נדבר במייל",
+    title: "שלחו לי מייל",
     value: siteConfig.contact.email,
     href: `mailto:${siteConfig.contact.email}`,
   },
   phone: {
-    title: "מעדיפים להתקשר?",
+    title: "בואו נדבר בטלפון",
     value: siteConfig.contact.phone,
     href: `tel:${siteConfig.contact.phone.replace(/\D/g, "")}`,
+  },
+  form: {
+    title: "מעדיפים שאחזור אליכם?",
+    subtitle: "כמה פרטים, ומתחילים להכיר.",
+    fields: {
+      name: "שם מלא *",
+      business: "שם העסק (לא חובה)",
+      email: "מייל *",
+      phone: "טלפון *",
+    },
+    helper: "מלאו מייל וטלפון כדי שאוכל לחזור אליכם.",
+    submit: "אשמח שתחזרי אליי",
+    submitting: "שולחים…",
+    success: "תודה, הפרטים נשלחו בהצלחה. אחזור אליכם בהקדם.",
+    error: "השליחה לא הצליחה. אפשר לנסות שוב או לפנות אליי במייל או בטלפון.",
   },
 };
