@@ -77,6 +77,7 @@ export function ProjectsSection() {
 
   function closeDetails() {
     dialogRef.current?.close();
+    handleDialogClose();
   }
 
   function handleDialogClose() {
@@ -212,6 +213,7 @@ export function ProjectsSection() {
                       alt={image.alt}
                       width={image.width}
                       height={image.height}
+                      loading="eager"
                       sizes="(max-width: 720px) 100vw, 850px"
                     />
                   </figure>

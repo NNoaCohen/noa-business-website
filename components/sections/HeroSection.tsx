@@ -1,43 +1,62 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { heroContent } from "@/data/hero";
 
 export function HeroSection() {
   const [isAnimated, setIsAnimated] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
   const [isSettled, setIsSettled] = useState(false);
+  const [isAccent, setIsAccent] = useState(false);
+  const [isPulsing, setIsPulsing] = useState(false);
+  const hasInteracted = useRef(false);
+  const isHovering = useRef(false);
+  const pulseTimeout = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-    if (mediaQuery.matches) {
-      setIsAnimated(false);
-      setIsClicked(true);
-      setIsSettled(true);
-      return;
-    }
+    const introTimers: number[] = [];
 
-    setIsAnimated(true);
-
-    const timers = [
-      window.setTimeout(() => setIsClicked(true), 2550),
-      window.setTimeout(() => {
+    const startupFrame = window.requestAnimationFrame(() => {
+      if (mediaQuery.matches) {
         setIsSettled(true);
-      }, 4150),
-    ];
+        setIsAccent(true);
+        return;
+      }
+
+      setIsAnimated(true);
+      introTimers.push(
+        window.setTimeout(() => {
+          if (!hasInteracted.current) setIsAccent(true);
+        }, 2550),
+        window.setTimeout(() => setIsSettled(true), 4150),
+      );
+    });
 
     return () => {
-      timers.forEach((timer) => window.clearTimeout(timer));
+      window.cancelAnimationFrame(startupFrame);
+      introTimers.forEach((timer) => window.clearTimeout(timer));
+      if (pulseTimeout.current !== undefined) window.clearTimeout(pulseTimeout.current);
     };
   }, []);
+
+  function activateWord() {
+    hasInteracted.current = true;
+    setIsAccent((current) => !current);
+
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setIsPulsing(true);
+      if (pulseTimeout.current !== undefined) window.clearTimeout(pulseTimeout.current);
+      pulseTimeout.current = window.setTimeout(() => setIsPulsing(false), 300);
+    }
+  }
 
   return (
     <section className="hero">
       <div className="wrap">
         <div
-          className={`brand-hero ${isAnimated ? "is-animated" : ""} ${isClicked ? "is-clicked" : ""} ${isSettled ? "is-settled" : ""}`}
+          className={`brand-hero ${isAnimated ? "is-animated" : ""} ${isSettled ? "is-settled" : ""}`}
           aria-label="הצעת עיצוב לאזור ההירו"
         >
           <div className="brand-hero__frame" aria-hidden="true" />
@@ -58,12 +77,35 @@ export function HeroSection() {
             <div className="brand-hero__tagline" aria-label="אתרים עם אופי">
               <span className="brand-hero__tagline-words">
                 <span>אתרים עם</span>
-                <span className="brand-hero__word">
+                <button
+                  className={`brand-hero__word${isAccent ? " is-accent" : ""}`}
+                  type="button"
+                  aria-label="החלפת הצבע של המילה אופי"
+                  aria-pressed={isAccent}
+                  onPointerEnter={(event) => {
+                    if (event.pointerType === "mouse" && !isHovering.current) {
+                      isHovering.current = true;
+                      activateWord();
+                    }
+                  }}
+                  onPointerLeave={() => {
+                    isHovering.current = false;
+                  }}
+                  onClick={(event) => {
+                    if (event.detail === 0 || !isHovering.current) activateWord();
+                  }}
+                >
                   אופי
-                  <span className="brand-hero__cursor" aria-hidden="true">
+                  <span
+                    className={`brand-hero__cursor${isPulsing ? " is-tapping" : ""}`}
+                    aria-hidden="true"
+                  >
                     <span className="brand-hero__ray" />
                     <span className="brand-hero__ray brand-hero__ray--two" />
                     <span className="brand-hero__ray brand-hero__ray--three" />
+                    <span className="brand-hero__ray brand-hero__interaction-ray" />
+                    <span className="brand-hero__ray brand-hero__ray--two brand-hero__interaction-ray" />
+                    <span className="brand-hero__ray brand-hero__ray--three brand-hero__interaction-ray" />
                     <span className="brand-hero__pointer">
                       <Image
                         src="/images/brand-cursor.png"
@@ -74,7 +116,7 @@ export function HeroSection() {
                       />
                     </span>
                   </span>
-                </span>
+                </button>
               </span>
             </div>
 
